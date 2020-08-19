@@ -16,7 +16,7 @@ var boxes = [];
 var ground;
 
 function setup() {
-    createCanvas(100%, 100%);
+    createCanvas(400, 400);
     engine = Engine.create();
     world = engine.world;
     //Engine.run(engine);
