@@ -33,7 +33,7 @@ document.onmousemove = function(evt) {
                 strokeStyle: randomColor,
             }
         }
-        World.add(engine.world, Bodies.circle(evt.x, evt.y, 20, options));
+        World.add(engine.world, Bodies.circle(evt.x, evt.y, 15, options));
     }
 };
 
@@ -49,7 +49,7 @@ document.body.onmousedown = function(evt) {
             strokeStyle: randomColor,
         }
     }
-    World.add(engine.world, Bodies.circle(evt.x, evt.y, 20, options));
+    World.add(engine.world, Bodies.circle(evt.x, evt.y, 15, options));
 }
 
 // create two boxes and a ground
