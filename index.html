@@ -1,11 +1,25 @@
 <html>
   <head>
-    
-    <style> body {padding: 0; margin: 0;} </style>
+
+    <style> body {padding: 0; margin: 0;} .rangeslider { position: absolute; bottom: 0;}</style>
+    <style>
+      canvas {
+        position:absolute;
+        width:400px;
+        height:600px;
+      }
+    </style>
   </head>
   <body>
     <script language="javascript" type="text/javascript" src="matter.js"></script>
+    <script language="javascript" type="text/javascript" src="p5.js"></script>
+
+    <div class="rangeslider" align="bottom" id = "cont">
+      <input type="range" min="1" max="100" value="0"
+             class="myslider" id="sliderRange">
+      <p>Value: <span id="demo"></span></p>
+    </div>
+
     <script language="javascript" type="text/javascript" src="index.js"></script>
-  </body>
-  
+    </body>
 </html>

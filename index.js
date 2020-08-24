@@ -1,70 +1,81 @@
 // module aliases
-var Engine = Matter.Engine,
+let Engine = Matter.Engine,
     Render = Matter.Render,
     World = Matter.World,
     Bodies = Matter.Bodies;
 
 // create an engine
-var engine = Engine.create();
-console.log(World)
-engine.world.gravity.y = 9.8
+let engine = Engine.create();
 // create a renderer
-var render = Render.create({
+engine.world.gravity.y = 0
+let render = Render.create({
     element: document.body,
     engine: engine,
     options: {
-        width: window.innerWidth,
-        height: window.innerHeight,
+        width: 400,
+        height: 600,
         wireframes: false
     }
 });
-var isMouseDown = false;
-document.onmouseup   = function() { isMouseDown = false };
+function setup() {
+    createCanvas(400,600);
+}
+function draw()
+{
+    background(color('rgba(0,0,0,0)'))
+    //let c = color(0, 126, 255, 102);
+    //fill(c);
+    //rect(15, 15, 35, 70);
+}
 
-document.onmousemove = function(evt) {
-    if(isMouseDown) {
-        console.log(evt.x)
-        console.log(evt.y)
-        var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
-        var options = {
-            restitution: 0.5,
-            friction: 0.5,
+let rangeslider = document.getElementById("sliderRange");
+let output = document.getElementById("demo");
+output.innerHTML = rangeslider.value;
+rangeslider.oninput = function() {
+    output.innerHTML = this.value;
+    console.log(this.value)
+    engine.world.gravity.y = Math.floor(this.value/10)
+}
+let randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
+let balz = [];
+document.body.onmousedown = function(evt) {
+    if(evt.x < 400 && evt.y < 600) {
+        let options = {
             render: {
                 strokeStyle: randomColor,
             }
         }
-        World.add(engine.world, Bodies.circle(evt.x, evt.y, 15, options));
-    }
-};
-
-document.body.onmousedown = function(evt) {
-    isMouseDown = true
-    console.log(evt.x)
-    console.log(evt.y)
-    var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
-    var options = {
-        restitution: 0.5,
-        friction: 0.5,
-        render: {
-            strokeStyle: randomColor,
+        let circ = Bodies.rectangle(evt.x, evt.y, 20, 20, options)
+        balz.push(circ)
+        for (var i = 0; i < balz.length; i++) {
+            if(balz[i].position.x > 500 && balz[i].position.y > 700)
+            {
+                console.log('removed')
+                World.remove(engine.world, balz[i])
+            }
         }
+        World.add(engine.world, circ);
     }
-    World.add(engine.world, Bodies.circle(evt.x, evt.y, 15, options));
 }
 
 // create two boxes and a ground
-//var boxA = Bodies.rectangle(400, 200, 80, 80);
-//var boxB = Bodies.rectangle(450, 50, 80, 80);
-//var boxC = Bodies.rectangle(100, 100, 100, 100);
-var ground = Bodies.rectangle(300, 400, 810, 60, { isStatic: true, angle: 0.5 });
-
-var ground2 = Bodies.rectangle(800, 50, 810, 60, { isStatic: true, angle: - 0.5 });
+//let boxA = Bodies.rectangle(400, 200, 80, 80);
+//let boxB = Bodies.rectangle(450, 50, 80, 80);
+//let boxC = Bodies.rectangle(100, 100, 100, 100);
+let options = {
+    isStatic: true,
+    render: {
+        strokeStyle: 'white',
+    }
+}
+let ground = Bodies.rectangle(0, 600, 800, 100, options);
 
 // add all of the bodies to the world
-World.add(engine.world, [ground, ground2]);
+World.add(engine.world, [ground]);
 
 // run the engine
 Engine.run(engine);
 
 // run the renderer
 Render.run(render);
+
